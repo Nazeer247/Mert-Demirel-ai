@@ -14,7 +14,7 @@ button,textarea{font:inherit}
 .availability{font-size:8px;letter-spacing:1.3px;color:#657168}
 .availability i,.chat-title i{display:inline-block;width:7px;height:7px;background:#789B79;border-radius:50%;margin-right:7px}
 .language-button{border:1px solid #CFC7B9;background:transparent;border-radius:24px;padding:8px 13px;color:var(--green);font-size:9px;font-weight:600;letter-spacing:1px}
-.language-button span{margin-left:7px}
+.language-button span{margin-left:7px}\n.reset-button{width:31px;height:31px;border:1px solid #CFC7B9;border-radius:50%;background:transparent;color:var(--green);font-size:17px;cursor:pointer}\n.reset-button:hover{background:#FFFCF6}
 .chat-workspace{width:min(100%,940px);min-height:0;flex:1;margin:0 auto;display:flex;flex-direction:column;padding:clamp(14px,2.5vh,28px) 0 8px}
 .welcome-area{flex:0 0 auto;padding:0 2px 14px}
 .eyebrow{font-size:9px;font-weight:700;letter-spacing:2px;color:#987968;margin:0 0 12px;display:flex;align-items:center;gap:9px}
