@@ -30,7 +30,7 @@ const esc = value => String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;"
 const today = () => new Date().toLocaleDateString("en-CA");
 function button(label, action, extra = "") {
   const primary = /class=["'][^"']*exp-btn--primary/.test(extra);
-  const attrs = extra.replace(/\\sclass=["'][^"']*["']/, "");
+  const attrs = extra.replace(/\sclass=["'][^"']*["']/, "");
   return '<button type="button" class="exp-btn' + (primary ? ' exp-btn--primary' : '') + '" data-exp="' + action + '" ' + attrs + '>' + label + '</button>';
 }
 function openPanel(title, subtitle, body) {
@@ -138,8 +138,6 @@ function addCalendarReminder() {
   const url=URL.createObjectURL(new Blob([ics],{type:"text/calendar"})); const a=document.createElement("a"); a.href=url; a.download="clinic-consultation-reminder.ics"; a.click(); URL.revokeObjectURL(url);
 }
 
-// Bind each shortcut directly to its own button. This avoids relying on
-// delegated bubbling/capture when embedded inside third-party chat widgets.
 function activateQuickAction(trigger) {
   const label = (trigger.dataset.action || trigger.textContent || "").toLowerCase();
   try {
@@ -155,14 +153,16 @@ function activateQuickAction(trigger) {
     openPanel("This section could not open", "Please try again. If the problem continues, contact the clinic team.", '<p class="exp-note">The interactive section encountered a loading error. Please refresh the page and try once more.</p>');
   }
 }
-actions.querySelectorAll("button.action").forEach(trigger => {
-  trigger.addEventListener("click", event => {
-    event.preventDefault();
-    event.stopPropagation();
-    event.stopImmediatePropagation();
-    activateQuickAction(trigger);
-  });
-});
+// Capture clicks at the shortcuts container so all six actions work even if
+// the individual buttons are re-rendered or their inner SVG/text is tapped.
+actions.addEventListener("click", event => {
+  const trigger = event.target.closest("button.action");
+  if (!trigger || !actions.contains(trigger)) return;
+  event.preventDefault();
+  event.stopPropagation();
+  event.stopImmediatePropagation();
+  activateQuickAction(trigger);
+}, true);
 
 chat.addEventListener("click", event => {
   const trigger = event.target.closest("[data-exp]");
