@@ -70,6 +70,8 @@ function createBotMessage() {
   return bubble;
 }
 async function requestBotReply(message, onChunk) {
+  const requestStarted = performance.now();
+  let firstByteMs = null;
   const response = await fetch(API_BASE + "/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -89,12 +91,14 @@ async function requestBotReply(message, onChunk) {
     if (result.done) break;
     const piece = decoder.decode(result.value, { stream: true });
     if (piece) {
+      if (firstByteMs === null) { firstByteMs = performance.now() - requestStarted; console.info("[Concierge timing] first response byte:", Math.round(firstByteMs), "ms"); }
       reply += piece;
       onChunk(reply);
     }
   }
   reply += decoder.decode();
   if (!reply.trim()) throw new Error("The concierge could not prepare a reply. Please try again.");
+  console.info("[Concierge timing] total browser time:", Math.round(performance.now() - requestStarted), "ms");
   return reply;
 }
 async function handleSend(value) {
