@@ -29,7 +29,9 @@ const procedures = [
 const esc = value => String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 const today = () => new Date().toLocaleDateString("en-CA");
 function button(label, action, extra = "") {
-  return '<button type="button" class="exp-btn" data-exp="' + action + '" ' + extra + '>' + label + '</button>';
+  const primary = /class=["'][^"']*exp-btn--primary/.test(extra);
+  const attrs = extra.replace(/\\sclass=["'][^"']*["']/, "");
+  return '<button type="button" class="exp-btn' + (primary ? ' exp-btn--primary' : '') + '" data-exp="' + action + '" ' + attrs + '>' + label + '</button>';
 }
 function openPanel(title, subtitle, body) {
   const previous = document.getElementById("conciergeExperience");
@@ -90,7 +92,7 @@ function showChecklist() {
     ["Questions worth asking","What options and alternatives should I understand?","What are the important risks and limitations?","What recovery time and follow-up may be needed?","Who should I contact if I have a concern?"]
   ];
   const markup = sections.map((group,i) => '<div class="check-group"><h3>' + group[0] + '</h3>' + group.slice(1).map((item,j) => '<label class="check-row"><input type="checkbox" data-check><span>' + item + '</span></label>').join("") + '</div>').join("");
-  const panel = openPanel("Prepare for consultation","Use this interactive checklist to get organised. Tick items as you complete them.",'<div class="check-progress"><span data-count>0 of 11 completed</span><div><i data-checkbar></i></div></div><div class="checklist">' + markup + '</div><p class="exp-note">This is a general preparation aid. Follow the personalised instructions provided by your clinical team.</p><div class="exp-actions">' + button("Send my checklist to the clinic","send-checklist") + button("Add a preparation reminder","calendar") + '</div>');
+  const panel = openPanel("Prepare for consultation","Use this interactive checklist to get organised. Tick items as you complete them.",'<div class="check-progress"><span data-count>0 of 12 completed</span><div><i data-checkbar></i></div></div><div class="checklist">' + markup + '</div><p class="exp-note">This is a general preparation aid. Follow the personalised instructions provided by your clinical team.</p><div class="exp-actions">' + button("Send my checklist to the clinic","send-checklist") + button("Add a preparation reminder","calendar") + '</div>');
   const boxes = [...panel.querySelectorAll("[data-check]")];
   const update = () => { const count = boxes.filter(x => x.checked).length; panel.querySelector("[data-count]").textContent = count + " of " + boxes.length + " completed"; panel.querySelector("[data-checkbar]").style.width = (count / boxes.length * 100) + "%"; };
   boxes.forEach(x => x.addEventListener("change",update));
