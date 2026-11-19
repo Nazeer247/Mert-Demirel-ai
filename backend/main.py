@@ -4,6 +4,7 @@ from typing import Literal
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from groq import Groq
 from pydantic import BaseModel, Field
 
@@ -74,7 +75,7 @@ def health():
     }
 
 
-@app.post("/api/chat", response_model=ChatResponse)
+@app.post("/api/chat")
 def chat(payload: ChatRequest):
     key = os.getenv("GROQ_API_KEY")
     if not key:
@@ -114,19 +115,33 @@ def chat(payload: ChatRequest):
 
     try:
         client = Groq(api_key=key)
-        result = client.chat.completions.create(
+        stream = client.chat.completions.create(
             model=MODEL,
             messages=messages,
             temperature=0.3,
             max_completion_tokens=700,
+            stream=True,
         )
-        reply = result.choices[0].message.content or ""
-        if not reply.strip():
-            raise ValueError("The AI returned an empty reply.")
-        return ChatResponse(reply=reply, model=result.model)
     except Exception as exc:
         print(f"Groq API error: {type(exc).__name__}: {exc}")
         raise HTTPException(
             status_code=502,
             detail="The AI service could not respond right now. Please try again shortly.",
         )
+
+    def generate():
+        try:
+            for chunk in stream:
+                if not chunk.choices:
+                    continue
+                piece = chunk.choices[0].delta.content
+                if piece:
+                    yield piece
+        except Exception as exc:
+            print(f"Groq streaming error: {type(exc).__name__}: {exc}")
+
+    return StreamingResponse(
+        generate(),
+        media_type="text/plain; charset=utf-8",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
