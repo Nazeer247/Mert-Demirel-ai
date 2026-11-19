@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field
 
 load_dotenv()
 
-MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
+MODEL = "openai/gpt-oss-120b"
 app = FastAPI(title="Mert Demirel Patient Concierge", version="0.1.0")
 
 origins = [
