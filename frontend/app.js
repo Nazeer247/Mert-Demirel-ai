@@ -4,7 +4,6 @@ const form=document.getElementById("form");
 const input=document.getElementById("message");
 const send=form.querySelector(".send-button");
 const history=[];
-document.getElementById("year").textContent=new Date().getFullYear();
 
 function add(text,role="assistant"){
   const el=document.createElement("article");
@@ -43,7 +42,7 @@ document.getElementById("services").addEventListener("click",event=>{
   if(card)ask(card.dataset.prompt);
 });
 document.getElementById("reset").addEventListener("click",()=>{
-  history.length=0;box.innerHTML='<p class="chat-date">YOUR CONVERSATION STARTS HERE</p>';
+  history.length=0;box.innerHTML='<p class="chat-date">YOUR PRIVATE CONVERSATION</p>';
   add("Welcome back. How may I help you today?");
 });
 document.getElementById("language").addEventListener("click",()=>{
