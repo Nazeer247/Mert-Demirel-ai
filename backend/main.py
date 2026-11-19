@@ -78,7 +78,8 @@ def root():
 def health():
     return {
         "status": "ok",
-        "groq_configured": bool(os.getenv("GROQ_API_KEY")),\n        "clinic_knowledge_loaded": bool(CLINIC_KNOWLEDGE),
+        "groq_configured": bool(os.getenv("GROQ_API_KEY")),
+        "clinic_knowledge_loaded": bool(CLINIC_KNOWLEDGE),
     }
 
 
