@@ -50,18 +50,52 @@ function showTyping(show) {
 function currentLanguageName() {
   return LANGUAGES.find(item => item[0] === currentLang)?.[1] || "English";
 }
-async function requestBotReply(message) {
+function createBotMessage() {
+  const row = document.createElement("div");
+  row.className = "msg msg--bot";
+  const avatar = document.createElement("div");
+  avatar.className = "avatar";
+  avatar.textContent = "M";
+  const col = document.createElement("div");
+  col.className = "msg__col";
+  const bubble = document.createElement("div");
+  bubble.className = "bubble bubble--white";
+  const time = document.createElement("time");
+  time.className = "time";
+  time.textContent = nowTime();
+  col.append(bubble, time);
+  row.append(avatar, col);
+  chat.appendChild(row);
+  scrollChat();
+  return bubble;
+}
+async function requestBotReply(message, onChunk) {
   const response = await fetch(API_BASE + "/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ message, language: currentLanguageName(), language_code: currentLang, history: history.slice(-12) })
   });
-  let data;
-  try { data = await response.json(); }
-  catch { throw new Error("The concierge returned an unexpected response. Please try again."); }
-  if (!response.ok) throw new Error(data.detail || "The concierge is temporarily unavailable.");
-  if (!data.reply) throw new Error("The concierge could not prepare a reply. Please try again.");
-  return data.reply;
+  if (!response.ok) {
+    let data = {};
+    try { data = await response.json(); } catch {}
+    throw new Error(data.detail || "The concierge is temporarily unavailable.");
+  }
+  if (!response.body) throw new Error("Live replies are not supported by this browser. Please try again.");
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let reply = "";
+  while (true) {
+    const result = await reader.read();
+    if (result.done) break;
+    const piece = decoder.decode(result.value, { stream: true });
+    if (piece) {
+      reply += piece;
+      onChunk(reply);
+    }
+  }
+  reply += decoder.decode();
+  if (!reply.trim()) throw new Error("The concierge could not prepare a reply. Please try again.");
+  return reply;
 }
 async function handleSend(value) {
   const message = value.trim();
@@ -71,14 +105,21 @@ async function handleSend(value) {
   input.value = "";
   sendButton.disabled = true;
   showTyping(true);
+  let botBubble = null;
   try {
-    const reply = await requestBotReply(message);
+    const reply = await requestBotReply(message, fullReply => {
+      showTyping(false);
+      if (!botBubble) botBubble = createBotMessage();
+      botBubble.textContent = fullReply;
+      scrollChat();
+    });
     history.push({ role: "assistant", content: reply });
     showTyping(false);
-    appendMessage(reply, "bot");
+    if (!botBubble) appendMessage(reply, "bot");
   } catch (error) {
     showTyping(false);
-    appendMessage(error.message === "Failed to fetch"
+    if (botBubble) botBubble.textContent += "\n\nThe connection was interrupted. Please ask me to continue.";
+    else appendMessage(error.message === "Failed to fetch"
       ? "I can't reach the concierge service right now. Please try again in a moment."
       : error.message, "bot");
   } finally {
