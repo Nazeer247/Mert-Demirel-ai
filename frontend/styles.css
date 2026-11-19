@@ -87,22 +87,33 @@ body{font-family:var(--sans);color:var(--text);background:var(--green-800);-webk
 }
 
 
-/* Compact 30% visual zoom reduction while keeping the chat full-screen */
-.stage{overflow:hidden}
-@media(max-width:519px){
- .widget{
-   width:142.86%;
-   max-width:686px;
-   height:142.86dvh;
-   transform:scale(.7);
-   transform-origin:center center;
-   flex:0 0 auto;
- }
-}
-@media(min-width:520px){
- .widget{
-   transform:scale(.88);
-   transform-origin:center center;
- }
+/* Natural responsive sizing: no artificial zoom or transform */
+.stage{width:100%;min-height:100dvh;overflow:hidden}
+.widget{
+  width:100%;
+  max-width:480px;
+  height:100dvh;
+  max-height:100dvh;
+  transform:none;
+  flex:0 1 auto;
 }
 .banner__art{object-fit:contain;object-position:left center}
+@media(min-width:520px){
+  .stage{padding:20px}
+  .widget{
+    height:min(900px,calc(100dvh - 40px));
+    max-height:calc(100dvh - 40px);
+    aspect-ratio:auto;
+    border-radius:26px;
+    transform:none;
+  }
+}
+@media(max-height:700px) and (max-width:519px){
+  .header{padding-bottom:24px}
+  .chat{gap:10px;padding-top:14px}
+  .banner{min-height:104px}
+  .banner__art{height:104px}
+  .action{height:48px}
+  .input-bar{height:58px}
+  .send{width:44px;height:44px}
+}
