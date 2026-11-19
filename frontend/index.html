@@ -4,61 +4,53 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#10251E">
-  <meta name="description" content="A personal patient concierge for Mert Demirel.">
+  <meta name="description" content="Mert Demirel private patient concierge.">
   <title>Mert Demirel | Patient Concierge</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="app-shell">
+  <main class="app-shell">
     <header class="site-header">
-      <a class="brand" href="#" aria-label="Mert Demirel concierge home">
+      <a class="brand" href="#" aria-label="Mert Demirel patient concierge">
         <span class="brand-mark">MD</span>
         <span class="brand-copy"><strong>MERT DEMİREL</strong><small>PLASTIC, RECONSTRUCTIVE &amp; AESTHETIC SURGERY</small></span>
       </a>
-      <div class="header-right"><span class="availability"><i></i> CONCIERGE ONLINE</span><button class="language-button" id="language" type="button">EN <span>⌄</span></button></div>
+      <div class="header-right"><span class="availability"><i></i> PATIENT CONCIERGE</span><button class="language-button" id="language" type="button">EN <span>⌄</span></button></div>
     </header>
 
-    <main class="workspace">
-      <section class="welcome">
-        <div><p class="eyebrow"><span></span> YOUR PERSONAL PATIENT CONCIERGE</p><h1>A warmer way to begin<span>.</span></h1><p class="welcome-copy">Hello. I'm here to guide you through your questions and help you take the next step with confidence.</p></div>
-        <div class="welcome-seal" aria-hidden="true"><span>MD</span><small>CARE WITH<br>CONFIDENCE</small></div>
-      </section>
-
-      <section class="services" aria-label="Quick ways I can help">
-        <div class="section-label">HOW MAY I HELP YOU?</div>
-        <div class="service-strip" id="services">
-          <button class="service-card" data-prompt="I'd like to explore the procedures and treatments available." type="button"><span class="service-icon">✧</span><span><strong>Explore procedures</strong><small>Treatment options</small></span><b>↗</b></button>
-          <button class="service-card" data-prompt="I'd like to understand a concern and learn what questions to ask the clinic." type="button"><span class="service-icon">♡</span><span><strong>Understand a concern</strong><small>Guidance for questions</small></span><b>↗</b></button>
+    <section class="chat-workspace" aria-label="Patient concierge">
+      <div class="welcome-area" id="welcome-area">
+        <p class="eyebrow"><span></span> YOUR PERSONAL PATIENT CONCIERGE</p>
+        <h1>A more personal<br>way to <em>begin.</em></h1>
+        <p class="welcome-copy">Welcome. I'm here to guide you with care, answer your questions and help you take the next step at your own pace.</p>
+        <div class="shortcut-heading">HOW MAY I HELP YOU TODAY?</div>
+        <div class="service-grid" id="services">
+          <button class="service-card" data-prompt="I'd like to explore the procedures and treatments available." type="button"><span class="service-icon">✧</span><span><strong>Explore procedures</strong><small>Treatment information</small></span><b>↗</b></button>
+          <button class="service-card" data-prompt="I'd like to understand a concern and learn what questions to ask the clinic." type="button"><span class="service-icon">♡</span><span><strong>Understand a concern</strong><small>Guidance for your questions</small></span><b>↗</b></button>
           <button class="service-card" data-prompt="I'd like help preparing for a consultation." type="button"><span class="service-icon">▤</span><span><strong>Prepare for consultation</strong><small>What to expect</small></span><b>↗</b></button>
-          <button class="service-card" data-prompt="I'd like help planning an international journey to Istanbul." type="button"><span class="service-icon">⌁</span><span><strong>Plan your journey</strong><small>Your visit to Istanbul</small></span><b>↗</b></button>
-          <button class="service-card" data-prompt="I'd like information about recovery and aftercare." type="button"><span class="service-icon">❀</span><span><strong>Recovery &amp; aftercare</strong><small>Care after treatment</small></span><b>↗</b></button>
+          <button class="service-card" data-prompt="I'd like help planning an international journey to Istanbul." type="button"><span class="service-icon">⌁</span><span><strong>International journey</strong><small>Plan your visit</small></span><b>↗</b></button>
+          <button class="service-card" data-prompt="I'd like information about recovery and aftercare." type="button"><span class="service-icon">❀</span><span><strong>Recovery &amp; aftercare</strong><small>Recovery support</small></span><b>↗</b></button>
           <button class="service-card" data-prompt="I'd like to speak with the clinic and learn how to contact the patient coordination team." type="button"><span class="service-icon">✉</span><span><strong>Speak with the clinic</strong><small>Patient assistance</small></span><b>↗</b></button>
         </div>
-      </section>
-
-      <section class="chat-panel" aria-label="Patient concierge chat">
-        <div class="chat-head">
-          <span class="chat-avatar">MD</span>
-          <span class="chat-title"><strong>Mert Demirel Concierge</strong><small><i></i> Here for you · 24/7</small></span>
-          <button id="reset" class="reset-button" type="button" aria-label="Start a new conversation" title="New conversation">↻</button>
-        </div>
-        <div class="messages" id="messages" aria-live="polite">
-          <p class="chat-date">YOUR CONVERSATION STARTS HERE</p>
-          <article class="bubble"><p>Welcome. It's lovely to have you here.</p><p>I'm the virtual patient concierge for the Mert Demirel practice. How may I help you today?</p><small>Just now</small></article>
-        </div>
+      </div>
+      <div class="messages" id="messages" aria-live="polite">
+        <p class="chat-date">YOUR PRIVATE CONVERSATION</p>
+        <article class="bubble"><p>Welcome. It's lovely to have you here.</p><p>I'm the virtual patient concierge for the Mert Demirel practice. How may I help you today?</p><small>Just now</small></article>
+      </div>
+      <footer class="chat-footer">
         <form id="form" class="composer">
           <label class="sr-only" for="message">Write your message</label>
           <textarea id="message" rows="1" maxlength="2000" placeholder="Write your message..." required></textarea>
           <button class="send-button" type="submit" aria-label="Send message">↑</button>
           <small class="composer-hint"><span>Enter to send · Shift + Enter for a new line</span><span>✳ Private conversation</span></small>
         </form>
-      </section>
-      <footer class="site-footer"><span>© <span id="year"></span> Mert Demirel · Patient Concierge</span><span>For urgent medical concerns, contact local emergency services.</span></footer>
-    </main>
-  </div>
+        <p class="disclaimer">For urgent medical concerns, please contact local emergency services.</p>
+      </footer>
+    </section>
+  </main>
   <script src="app.js" defer></script>
 </body>
 </html>
