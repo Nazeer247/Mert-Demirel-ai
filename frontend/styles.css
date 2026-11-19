@@ -85,3 +85,24 @@ body{font-family:var(--sans);color:var(--text);background:var(--green-800);-webk
  .status-text{font-size:11px;margin-right:0}
  .close-btn svg{width:23px;height:23px}
 }
+
+
+/* Compact 30% visual zoom reduction while keeping the chat full-screen */
+.stage{overflow:hidden}
+@media(max-width:519px){
+ .widget{
+   width:142.86%;
+   max-width:686px;
+   height:142.86dvh;
+   transform:scale(.7);
+   transform-origin:center center;
+   flex:0 0 auto;
+ }
+}
+@media(min-width:520px){
+ .widget{
+   transform:scale(.88);
+   transform-origin:center center;
+ }
+}
+.banner__art{object-fit:contain;object-position:left center}
