@@ -107,7 +107,8 @@ def chat(payload: ChatRequest):
     )
 
     messages = [
-        {"role": "system", "content": SYSTEM},\n        {"role": "system", "content": "OFFICIAL CLINIC KNOWLEDGE BASE (use these verified public website facts when relevant; do not contradict or invent details):\\n\\n" + CLINIC_KNOWLEDGE},
+        {"role": "system", "content": SYSTEM},
+        {"role": "system", "content": "OFFICIAL CLINIC KNOWLEDGE BASE (use these verified public website facts when relevant; do not contradict or invent details):\\n\\n" + CLINIC_KNOWLEDGE},
         {"role": "system", "content": language_instruction},
     ]
 
