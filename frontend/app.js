@@ -36,11 +36,11 @@ async function ask(value){
   }finally{send.disabled=false;input.focus();}
 }
 form.addEventListener("submit",event=>{event.preventDefault();ask(input.value);});
-input.addEventListener("input",()=>{input.style.height="auto";input.style.height=Math.min(input.scrollHeight,110)+"px";});
+input.addEventListener("input",()=>{input.style.height="auto";input.style.height=Math.min(input.scrollHeight,100)+"px";});
 input.addEventListener("keydown",event=>{if(event.key==="Enter"&&!event.shiftKey){event.preventDefault();form.requestSubmit();}});
 document.getElementById("services").addEventListener("click",event=>{
   const card=event.target.closest("[data-prompt]");
-  if(card){document.getElementById("concierge").scrollIntoView({behavior:"smooth",block:"start"});ask(card.dataset.prompt);}
+  if(card)ask(card.dataset.prompt);
 });
 document.getElementById("reset").addEventListener("click",()=>{
   history.length=0;box.innerHTML='<p class="chat-date">YOUR CONVERSATION STARTS HERE</p>';
