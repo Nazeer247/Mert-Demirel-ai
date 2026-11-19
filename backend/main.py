@@ -29,7 +29,7 @@ class Message(BaseModel):
     content: str = Field(min_length=1,max_length=4000)
 class ChatRequest(BaseModel):
     message: str = Field(min_length=1,max_length=2000)
-    history: list[Message] = Field(default_factory=list,max_length=12)
+    history: list[Message] = Field(default_factory=list,max_length=12)\n    language: str = Field(default="English",max_length=60)\n    language_code: str = Field(default="en",max_length=8)
 class ChatResponse(BaseModel):
     reply: str
     model: str
@@ -45,7 +45,7 @@ def chat(payload: ChatRequest):
     key=os.getenv("GROQ_API_KEY")
     if not key:
         raise HTTPException(status_code=503,detail="Groq API key is not configured on the server.")
-    messages=[{"role":"system","content":SYSTEM}]
+    language_instruction = (\n        f"\n\nMANDATORY RESPONSE LANGUAGE: {payload.language} (code: {payload.language_code}). " \n        f"Write every response and every follow-up question entirely in {payload.language}. " \n        "Do not switch to English unless the selected language is English or the patient explicitly asks to change language. " \n        "This rule applies especially to shortcut-button flows and multi-step questionnaires. " \n        "Keep the selected language for the entire conversation, regardless of the language used in earlier chat history."\n    )\n    messages=[{"role":"system","content":SYSTEM + language_instruction}]
     for item in payload.history:
         messages.append({"role":item.role,"content":item.content})
     if not payload.history or payload.history[-1].role!="user" or payload.history[-1].content!=payload.message:
