@@ -1,8 +1,10 @@
 (() => {
 "use strict";
 const chat = document.getElementById("chat");
-const actions = document.getElementById("actions");
-if (!chat || !actions) return;
+if (!chat) {
+  console.error("[Concierge] Chat container #chat was not found; experiences were not initialised.");
+  return;
+}
 
 const clinic = { wa: "905458340606", phone: "+902165041810", intl: "+447782240606", email: "info@mertdemirel.com" };
 const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "local time";
@@ -153,14 +155,14 @@ function activateQuickAction(trigger) {
     openPanel("This section could not open", "Please try again. If the problem continues, contact the clinic team.", '<p class="exp-note">The interactive section encountered a loading error. Please refresh the page and try once more.</p>');
   }
 }
-// Capture clicks at the shortcuts container so all six actions work even if
-// the individual buttons are re-rendered or their inner SVG/text is tapped.
-actions.addEventListener("click", event => {
-  const trigger = event.target.closest("button.action");
-  if (!trigger || !actions.contains(trigger)) return;
+// Listen on the document so shortcut clicks are still caught if the
+// shortcuts container is moved or replaced after this file loads.
+document.addEventListener("click", event => {
+  const target = event.target instanceof Element ? event.target : event.target.parentElement;
+  const trigger = target && target.closest("#actions button.action[data-action]");
+  if (!trigger) return;
   event.preventDefault();
   event.stopPropagation();
-  event.stopImmediatePropagation();
   activateQuickAction(trigger);
 }, true);
 
