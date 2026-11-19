@@ -138,21 +138,31 @@ function addCalendarReminder() {
   const url=URL.createObjectURL(new Blob([ics],{type:"text/calendar"})); const a=document.createElement("a"); a.href=url; a.download="clinic-consultation-reminder.ics"; a.click(); URL.revokeObjectURL(url);
 }
 
-// One delegated handler owns all six shortcuts. They open in-chat experiences,
-// never send their labels as chat prompts.
-actions.addEventListener("click", event => {
-  const trigger = event.target.closest("button.action");
-  if (!trigger || !actions.contains(trigger)) return;
-  event.preventDefault();
-  event.stopPropagation();
+// Bind each shortcut directly to its own button. This avoids relying on
+// delegated bubbling/capture when embedded inside third-party chat widgets.
+function activateQuickAction(trigger) {
   const label = (trigger.dataset.action || trigger.textContent || "").toLowerCase();
-  if (label.includes("explore")) showProcedures();
-  else if (label.includes("understand")) showConcern();
-  else if (label.includes("prepare")) showChecklist();
-  else if (label.includes("international")) showJourney();
-  else if (label.includes("recovery")) showRecovery();
-  else if (label.includes("speak")) showContact();
-}, true);
+  try {
+    if (label.includes("explore")) showProcedures();
+    else if (label.includes("understand")) showConcern();
+    else if (label.includes("prepare")) showChecklist();
+    else if (label.includes("international")) showJourney();
+    else if (label.includes("recovery")) showRecovery();
+    else if (label.includes("speak")) showContact();
+    else return;
+  } catch (error) {
+    console.error("[Concierge quick action]", label, error);
+    openPanel("This section could not open", "Please try again. If the problem continues, contact the clinic team.", '<p class="exp-note">The interactive section encountered a loading error. Please refresh the page and try once more.</p>');
+  }
+}
+actions.querySelectorAll("button.action").forEach(trigger => {
+  trigger.addEventListener("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    activateQuickAction(trigger);
+  });
+});
 
 chat.addEventListener("click", event => {
   const trigger = event.target.closest("[data-exp]");
