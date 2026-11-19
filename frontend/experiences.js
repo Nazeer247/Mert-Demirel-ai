@@ -42,8 +42,8 @@ function book(prefill){
  '<label class="exp-check"><input type="checkbox" name="consent" required> I agree that the clinic may receive and use these details to respond to my consultation request. This is not a confirmed appointment.</label><button class="exp-btn exp-btn--primary" type="submit">Send consultation request</button></form>');
 }
 function showProcedures(filter){
- const categories=["All","Breast","Face","Body","Non-surgical","Men","Hair"];
- const list=procedureItems.filter(p=>filter==="All"||p.cat===filter).map(p=>{
+ const categories=["All","Breast","Face","Body","Non-surgical","Men","Hair","Beard","Eyebrow"];
+ const list=procedureItems.filter(p=>filter==="All"||p.cat===filter||(filter==="Beard"&&p.name==="Beard transplant")||(filter==="Eyebrow"&&p.name==="Eyebrow transplant")).map(p=>{
   return '<article class="procedure-card"><span class="exp-tag">'+p.cat+'</span><h3>'+esc(p.name)+'</h3><p>'+esc(p.desc)+'</p><a class="exp-link" href="'+p.url+'" target="_blank" rel="noopener">Official clinic procedure guide</a><div class="procedure-card__actions">'+btn("Learn more","learn",'data-url="'+p.url+'"')+btn("Request consultation","candidate",'data-name="'+esc(p.name)+'"')+'</div></article>';
  }).join("");
  const filters=categories.map(x=>'<button type="button" class="filter-chip '+(x===filter?"is-active":"")+'" data-filter="'+x+'">'+x+'</button>').join("");
