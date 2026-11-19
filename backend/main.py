@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import Literal
 
 from dotenv import load_dotenv
@@ -41,6 +42,12 @@ Do not request passport numbers, payment card details or unnecessary sensitive i
 Explain that this is an automated demo and all clinical decisions require a qualified clinician.
 Do not claim an appointment is booked. Offer to prepare an enquiry for human follow-up."""
 
+KNOWLEDGE_PATH = Path(__file__).with_name("clinic_knowledge.md")
+try:
+    CLINIC_KNOWLEDGE = KNOWLEDGE_PATH.read_text(encoding="utf-8")
+except OSError:
+    CLINIC_KNOWLEDGE = ""
+
 class Message(BaseModel):
     role: Literal["user", "assistant"]
     content: str = Field(min_length=1, max_length=4000)
@@ -71,7 +78,7 @@ def root():
 def health():
     return {
         "status": "ok",
-        "groq_configured": bool(os.getenv("GROQ_API_KEY")),
+        "groq_configured": bool(os.getenv("GROQ_API_KEY")),\n        "clinic_knowledge_loaded": bool(CLINIC_KNOWLEDGE),
     }
 
 
@@ -99,7 +106,7 @@ def chat(payload: ChatRequest):
     )
 
     messages = [
-        {"role": "system", "content": SYSTEM},
+        {"role": "system", "content": SYSTEM},\n        {"role": "system", "content": "OFFICIAL CLINIC KNOWLEDGE BASE (use these verified public website facts when relevant; do not contradict or invent details):\\n\\n" + CLINIC_KNOWLEDGE},
         {"role": "system", "content": language_instruction},
     ]
 
