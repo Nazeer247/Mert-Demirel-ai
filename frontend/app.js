@@ -47,11 +47,11 @@ function showTyping(show) {
   } else if (!show && note) note.remove();
   if (show) scrollChat();
 }
-async function requestBotReply(message) {
+function currentLanguageName() {\n  return LANGUAGES.find(item => item[0] === currentLang)?.[1] || "English";\n}\nasync function requestBotReply(message) {
   const response = await fetch(API_BASE + "/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message, history: history.slice(-12) })
+    body: JSON.stringify({ message, language: currentLanguageName(), language_code: currentLang, history: history.slice(-12) })
   });
   let data;
   try { data = await response.json(); }
