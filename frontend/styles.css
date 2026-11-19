@@ -117,3 +117,55 @@ body{font-family:var(--sans);color:var(--text);background:var(--green-800);-webk
   .input-bar{height:58px}
   .send{width:44px;height:44px}
 }
+
+
+/* Interactive clinic experiences */
+.experience{width:100%;background:#fffdfb;border:1px solid #e5d4c2;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(90,65,45,.10);color:var(--text)}
+.experience__head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:17px 18px 14px;background:linear-gradient(120deg,#f0e0d0,#fbf5ee);border-bottom:1px solid #eadbcb}
+.experience__eyebrow{font-size:10px;letter-spacing:1.8px;color:#8a7055;font-weight:700;margin-bottom:5px}
+.experience__head h2{font:600 26px/1.05 var(--serif);color:var(--green-800)}
+.experience__head p:last-child{font-size:12px;line-height:1.45;color:#6d706c;margin-top:5px}
+.experience__close{width:32px;height:32px;border:1px solid #d8c5b1;border-radius:50%;background:#fffaf5;color:var(--green-800);font-size:23px;line-height:1;cursor:pointer;flex:0 0 auto}
+.experience__content{padding:15px;display:flex;flex-direction:column;gap:13px}
+.exp-form{display:flex;flex-direction:column;gap:12px}
+.exp-form label{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600;color:#46534c}
+.exp-form input,.exp-form select,.exp-form textarea{width:100%;min-height:43px;border:1px solid #dfd2c4;border-radius:11px;background:#fff;padding:10px 12px;font:14px var(--sans);color:var(--text);outline:none}
+.exp-form textarea{resize:vertical}
+.exp-form input:focus,.exp-form select:focus,.exp-form textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(185,154,107,.14)}
+.exp-form .exp-check{display:flex;flex-direction:row;align-items:flex-start;gap:9px;font-weight:400;line-height:1.4}
+.exp-check input{width:17px;min-height:17px;height:17px;flex:0 0 auto;margin-top:1px;accent-color:var(--green-700)}
+.exp-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:10px 14px;border:1px solid #d9c7b3;border-radius:999px;background:#f7eee5;color:var(--green-800);font:600 12px var(--sans);text-decoration:none;cursor:pointer;text-align:center}
+.exp-btn--primary{background:var(--green-800);border-color:var(--green-800);color:white;width:100%}
+.exp-btn:hover,.contact-link:hover{filter:brightness(.97);border-color:var(--gold)}
+.exp-note{font-size:11px;line-height:1.5;color:#747a74}
+.exp-link{color:#315c4b;font-size:12px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.exp-filters{display:flex;gap:7px;overflow-x:auto;padding-bottom:2px}
+.filter-chip{border:1px solid #dfd0bf;background:#fbf5ee;color:#526057;border-radius:999px;padding:8px 13px;font:600 12px var(--sans);white-space:nowrap}
+.filter-chip.is-active{background:var(--green-800);color:white;border-color:var(--green-800)}
+.procedure-list{display:flex;flex-direction:column;gap:11px}
+.procedure-card{display:grid;grid-template-columns:76px minmax(0,1fr);gap:12px;padding:11px;border:1px solid #eadfd3;border-radius:17px;background:#fff}
+.procedure-art{min-height:112px;border-radius:12px;background:linear-gradient(145deg,#d8c0a8,#f1e5d8);display:flex;align-items:flex-end;padding:8px;color:#604d3d;font-size:10px;letter-spacing:1px;font-weight:700}
+.exp-tag{display:inline-block;color:#886d4c;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.procedure-card h3,.experience h3{font:600 19px/1.1 var(--serif);color:var(--green-800);margin:3px 0 5px}
+.procedure-card p{font-size:11px;line-height:1.45;color:#6e746e;margin-bottom:6px}
+.procedure-card__actions,.exp-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+.procedure-card__actions .exp-btn{font-size:10px;padding:8px 10px}
+.checklist{display:flex;flex-direction:column;gap:8px}
+.checklist h3{margin:8px 0 2px}
+.check-row{display:flex;align-items:flex-start;gap:9px;font-size:12px;line-height:1.4;color:#515d55}
+.check-row input{accent-color:var(--green-700);margin-top:2px}
+.journey-steps,.recovery-list{display:flex;flex-direction:column;gap:9px}
+.journey-steps>div,.recovery-list>div{padding:11px 12px;border-left:3px solid var(--gold);border-radius:0 12px 12px 0;background:#f8f1e9}
+.journey-steps b,.recovery-list b{font-size:12px;color:var(--green-800)}
+.journey-steps p,.recovery-list p{font-size:11px;line-height:1.45;color:#69716b;margin-top:3px}
+.exp-warning{padding:12px;border:1px solid #e5c9b8;background:#fff5ef;border-radius:13px}
+.exp-warning b{font-size:12px;color:#8b442e}
+.exp-warning p{font-size:11px;line-height:1.5;color:#684b40;margin-top:4px}
+.contact-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.contact-link{display:flex;flex-direction:column;gap:4px;padding:12px;border:1px solid #e4d5c5;border-radius:13px;background:#faf5ef;text-decoration:none;color:var(--green-800);min-width:0}
+.contact-link b{font-size:12px}.contact-link span{font-size:10px;color:#737a73;overflow-wrap:anywhere}
+.exp-success,.exp-result{padding:14px;border-radius:13px;background:#eff5ef;color:#31543f;font-size:12px;line-height:1.55}
+.exp-result h3{margin-bottom:6px}
+.quick-replies{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.quick-replies button{border:1px solid #dfcfbd;background:#fbf5ee;color:#365647;border-radius:999px;padding:7px 10px;font:600 10px var(--sans);cursor:pointer}
+@media(max-width:360px){.procedure-card{grid-template-columns:62px minmax(0,1fr);gap:8px;padding:8px}.procedure-art{min-height:105px}.contact-actions{grid-template-columns:1fr}.experience__content{padding:12px}}
