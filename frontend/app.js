@@ -135,10 +135,7 @@ composer.addEventListener("submit", event => {
   event.preventDefault();
   handleSend(input.value);
 });
-actions.addEventListener("click", event => {
-  const button = event.target.closest(".action");
-  if (button) handleSend(button.dataset.action || button.textContent.trim());
-});
+// The six shortcut buttons are handled by experiences.js. Do not send their labels\n// as chat messages: doing so scrolls the conversation instead of opening an experience.
 closeBtn.addEventListener("click", () => {
   widget.classList.toggle("is-closed");
   document.dispatchEvent(new CustomEvent("concierge:close"));
